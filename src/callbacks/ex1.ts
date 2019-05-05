@@ -1,8 +1,32 @@
+// Async pattern callback:
+
+/**
+ * Callback hell:
+ * two evils of callback hell:
+ * - inversion of control
+ *  (
+ *    in the ctx of cb as:
+ *    There's part of my program that I'm in control of executing.
+ *    And then, there's another portion of my code that I'm not in control of executing.
+ *  )
+ *  And the way that we express that is to take the first half of my program that executes now and
+ *  the second half of my code that executes in the callback, and when I give that call back to
+ *  somebody else. That's what inverts the control and it puts them in control of when and in what
+ *  manner to execute the second half of my program.
+ *  You did not realize that there was a trust point when you passed in a callback.
+ *  When you passed in a callback you are trusting that that callback will be not called too many
+ *  times or too few times or whatever.
+ *  This is a fundamental deficiency in callback design is that the callback itself does not have a
+ *  solution, there is no solution for this part of callback hell, this inversion of control trust
+ *  issue.
+ *
+ * - callbacks are not REASONable:
+ *  they are not able to be reasoned about...
+ */
+
 type URI = 'file1' | 'file2' | 'file3'
-interface Cb<T> {
-  (t: T): any
-}
-function fakeAjax(url: URI, cb: Cb<string>) {
+
+function fakeAjax(url: URI, cb: (text: string) => any) {
   const fake_responses = {
     file1: 'The first text',
     file2: 'The middle text',
