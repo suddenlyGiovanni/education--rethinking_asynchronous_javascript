@@ -1,5 +1,6 @@
 // Async pattern callback:
 
+import { URI } from '../types'
 /**
  * Callback hell:
  * two evils of callback hell:
@@ -23,8 +24,6 @@
  * - callbacks are not REASONable:
  *  they are not able to be reasoned about...
  */
-
-type URI = 'file1' | 'file2' | 'file3'
 
 function fakeAjax(url: URI, cb: (text: string) => any) {
   const fake_responses = {
