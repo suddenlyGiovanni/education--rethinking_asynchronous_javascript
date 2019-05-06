@@ -2,9 +2,9 @@
 
 import { URI } from '../types'
 /**
- * Callback hell:
- * two evils of callback hell:
- * - inversion of control
+ * Async pattern: "callback hell":
+ * 2 evils of callback hell:
+ * - INVERSION OF CONTROL
  *  (
  *    in the ctx of cb as:
  *    There's part of my program that I'm in control of executing.
@@ -21,9 +21,49 @@ import { URI } from '../types'
  *  solution, there is no solution for this part of callback hell, this inversion of control trust
  *  issue.
  *
+ *    TRUST:
+ *      1. not too early
+ *      2. not too late
+ *      3. not too many times
+ *      4. not too few times
+ *      5. no lost context
+ *      6. no swallowed errors
+ *
  * - callbacks are not REASONable:
  *  they are not able to be reasoned about...
  */
+
+// pyramid of doom:
+setTimeout(() => {
+  console.log('one')
+  setTimeout(() => {
+    console.log('two')
+    setTimeout(() => {
+      console.log('three')
+    }, 1000)
+  }, 1000)
+}, 1000)
+
+// still callback hell even if handled like this
+function one(cb: () => void): void {
+  console.log('one')
+  setTimeout(cb, 1000)
+}
+
+function two(cb: () => void): void {
+  console.log('two')
+  setTimeout(cb, 1000)
+}
+
+function three(): void {
+  console.log('three')
+}
+
+one(function() {
+  two(three)
+})
+
+// EXERCISE *************************************
 
 function fakeAjax(url: URI, cb: (text: string) => any) {
   const fake_responses = {
